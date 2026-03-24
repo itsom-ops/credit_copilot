@@ -5,15 +5,15 @@ from langchain_community.vectorstores import FAISS
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 POLICY_FILE = os.path.join(DATA_DIR, "bank_policy.md")
-FAISS_INDEX_PATH = os.path.join(DATA_DIR, "faiss_index")
+FAISS_INDEX_PATH = os.path.join(DATA_DIR, "faiss_index_fast")
 
 _embeddings = None
 
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        from langchain_huggingface import HuggingFaceEmbeddings
-        _embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+        _embeddings = FastEmbedEmbeddings()
     return _embeddings
 
 def get_retriever():
