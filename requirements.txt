@@ -1,0 +1,10 @@
+langchain==0.2.14
+langchain-community==0.2.12
+langchain-openai==0.1.22
+langgraph==0.2.13
+fastapi==0.112.1
+uvicorn==0.30.6
+faiss-cpu==1.8.0.post1
+sentence-transformers==3.0.1
+pydantic==2.8.2
+python-dotenv==1.0.1

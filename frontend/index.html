@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EY Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-mode theme-dark">
+
+    <div id="viewAuth" class="landing-container fadeIn">
+        <div class="landing-content animate-slide-right">
+            <h1 class="hero-title">Intelligent Credit<br>Underwriting</h1>
+            <p class="hero-subtitle">Next-Generation Agentic AI Platform with Premium Workflow Visualization, Modular Insights, and Enterprise Guardrails.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item hover-glow">
+                    <div class="f-icon"><i class="fa-solid fa-sitemap"></i></div>
+                    <h3>Multi-Agent DAGs</h3>
+                    <p>Orchestrates Extraction and Critic agents seamlessly.</p>
+                </div>
+                <div class="feature-item hover-glow">
+                    <div class="f-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Dynamic UI Components</h3>
+                    <p>Real-time workflow progress and metric visualizations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="landing-auth animate-slide-left">
+            <div class="auth-card">
+                <div class="auth-logo"><i class="fa-solid fa-fingerprint"></i></div>
+                <h2>EY Workspace Identity</h2>
+                <p>Secure Enterprise Portal</p>
+                
+                <button class="google-btn" onclick="mockGoogleLogin()">
+                    <i class="fa-brands fa-google"></i>
+                    <span>Authenticate via SSO</span>
+                </button>
+                <div id="authLoader" class="loader-pulse" style="display:none; margin-top:1.5rem;">Authenticating...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP VIEW -->
+    <div id="viewApp" class="app-layout" style="display: none;">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="logo-text">EY <span>Copilot</span></div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="switchTab('overview', this)">
+                    <i class="fa-solid fa-table-columns"></i> <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('agent-monitor', this)">
+                    <i class="fa-solid fa-network-wired"></i> <span>Workflow Pipeline</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-risk" onclick="switchTab('risk', this)">
+                    <i class="fa-solid fa-shield-cat"></i> <span>Risk & Decision</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('hitl', this)">
+                    <i class="fa-solid fa-user-check"></i> <span>Review Queue</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('rag', this)">
+                    <i class="fa-solid fa-book"></i> <span>Policy Expert</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">O</div>
+                    <div class="user-info">
+                        <span id="userNameDisplay">Om@ey.com</span>
+                        <span class="user-role">Lead Analyst</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn" title="Sign Out"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <header class="top-header">
+                <h2 id="pageTitle" class="page-title">Operational Dashboard</h2>
+                <div class="header-actions">
+                    <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="badge-dot"></span></button>
+                    <button class="icon-btn"><i class="fa-solid fa-gear"></i></button>
+                </div>
+            </header>
+
+            <div class="content-scrollable">
+                
+                <!-- VIEW 1: OVERVIEW / KPI DASHBOARD -->
+                <div id="tab-overview" class="view-section active animate-slide-up">
+                    
+                    <div class="kpi-grid mb-2">
+                        <div class="metric-card">
+                            <div class="metric-icon blue-icon"><i class="fa-solid fa-file-contract"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-value">1,248</span>
+                                <span class="metric-label">Apps Evaluated</span>
+                            </div>
+                            <div class="metric-trend positive"><i class="fa-solid fa-arrow-up"></i> 12%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon yellow-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-value" id="kpi-latency">2.4s</span>
+                                <span class="metric-label">Avg Pipeline Time</span>
+                            </div>
+                            <div class="metric-trend positive"><i class="fa-solid fa-arrow-down"></i> 300ms</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon green-icon"><i class="fa-solid fa-check-double"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-value">68%</span>
+                                <span class="metric-label">Auto-Approval</span>
+                            </div>
+                            <div class="metric-trend neutral"><i class="fa-solid fa-minus"></i> 0%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon red-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="metric-info">
+                                <span class="metric-value">14</span>
+                                <span class="metric-label">Exceptions/HITL</span>
+                            </div>
+                            <div class="metric-trend negative"><i class="fa-solid fa-arrow-up"></i> 2</div>
+                        </div>
+                    </div>
+
+                    <!-- Complex Charts Section -->
+                    <div class="charts-grid mb-2">
+                        <div class="card p-card">
+                            <h3 class="mb-1 text-sm text-mute"><i class="fa-solid fa-chart-area"></i> Underwriting Volume & Trajectory</h3>
+                            <div style="position: relative; height: 220px; width: 100%;">
+                                <canvas id="volumeChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card p-card">
+                            <h3 class="mb-1 text-sm text-mute"><i class="fa-solid fa-chart-pie"></i> SLA Distribution</h3>
+                            <div style="position: relative; height: 220px; width: 100%; display: flex; justify-content: center;">
+                                <canvas id="radialChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-card">
+                        <div class="card-header pb-border flex-between">
+                            <div>
+                                <h3><i class="fa-solid fa-rocket color-accent"></i> Launch Agentic Underwriting</h3>
+                                <p class="text-mute">Submit a payload to trigger the orchestration workflows.</p>
+                            </div>
+                        </div>
+                        <div class="card-body mt-2">
+                            <div class="input-tabs mb-1">
+                                <button id="tabTextBtn" class="i-tab active" onclick="switchInputMode('text')"><i class="fa-solid fa-code"></i> Text Payload</button>
+                                <button id="tabPdfBtn" class="i-tab" onclick="switchInputMode('pdf')"><i class="fa-solid fa-file-pdf"></i> Document Extract</button>
+                            </div>
+
+                            <textarea id="applicantData" rows="4" class="modern-input" placeholder="Enter applicant JSON or text...">My name is Jane Doe. I make $45000 a year and have $2000 monthly debt. My credit score is 610, I am Self-Employed, and I want a $150000 loan for a home purchase.</textarea>
+
+                            <div id="pdfUploadContainer" class="file-drop-zone" style="display: none;">
+                                <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                                <p>Drag and drop PDF, or click to browse</p>
+                                <input type="file" id="pdfFile" accept="application/pdf" class="file-input-hidden">
+                                <button class="btn-outline mt-1" onclick="document.getElementById('pdfFile').click()">Choose File</button>
+                            </div>
+                            
+                            <div class="flex-end mt-2" style="align-items:center;">
+                                <p id="manualReviewMsg" class="color-warning font-bold mr-2" style="display:none;"><i class="fa-solid fa-hand-paper"></i> Flagged for Review</p>
+                                <button id="analyzeBtn" class="btn-primary" onclick="runAnalysis()">Initialize Engine <i class="fa-solid fa-play ml-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: AGENT MONITOR -->
+                <div id="tab-agent-monitor" class="view-section animate-slide-up" style="display:none;">
+                    
+                    <div class="card p-card mb-2">
+                        <div class="card-header pb-border">
+                            <h3><i class="fa-solid fa-timeline color-accent"></i> Active Pipeline Orchestration</h3>
+                        </div>
+                        <div class="card-body mt-2 pt-1">
+                            
+                            <div class="workflow-container">
+                                <div class="workflow-stage" id="ws-extract">
+                                    <div class="ws-icon-wrap"><div class="ws-icon"><i class="fa-solid fa-file-import"></i></div></div>
+                                    <div class="ws-details">
+                                        <div class="ws-top"><span>Document Extraction</span> <span class="ws-badge">Idle</span></div>
+                                        <div class="ws-bar-bg"><div class="ws-bar fill-yellow" style="width:0%;"></div></div>
+                                    </div>
+                                </div>
+                                <div class="ws-connector"><div class="line"></div></div>
+                                
+                                <div class="workflow-stage" id="ws-policy">
+                                    <div class="ws-icon-wrap"><div class="ws-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div></div>
+                                    <div class="ws-details">
+                                        <div class="ws-top"><span>Policy Lookup (RAG)</span> <span class="ws-badge">Idle</span></div>
+                                        <div class="ws-bar-bg"><div class="ws-bar fill-blue" style="width:0%;"></div></div>
+                                    </div>
+                                </div>
+                                <div class="ws-connector"><div class="line"></div></div>
+
+                                <div class="workflow-stage" id="ws-risk">
+                                    <div class="ws-icon-wrap"><div class="ws-icon"><i class="fa-solid fa-chart-pie"></i></div></div>
+                                    <div class="ws-details">
+                                        <div class="ws-top"><span>Risk Analysis (Critic)</span> <span class="ws-badge">Idle</span></div>
+                                        <div class="ws-bar-bg"><div class="ws-bar fill-purple" style="width:0%;"></div></div>
+                                    </div>
+                                </div>
+                                <div class="ws-connector"><div class="line"></div></div>
+
+                                <div class="workflow-stage" id="ws-report">
+                                    <div class="ws-icon-wrap"><div class="ws-icon"><i class="fa-solid fa-clipboard-check"></i></div></div>
+                                    <div class="ws-details">
+                                        <div class="ws-top"><span>Report Generation</span> <span class="ws-badge">Idle</span></div>
+                                        <div class="ws-bar-bg"><div class="ws-bar fill-green" style="width:0%;"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card p-card bg-terminal border-glow">
+                        <div class="card-header pb-border flex-between">
+                            <h3 class="font-mono text-sm"><i class="fa-solid fa-terminal"></i> LangGraph Live Monologue</h3>
+                            <div class="mac-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        </div>
+                        <div class="card-body mt-1">
+                            <div id="terminalBody" class="terminal-body font-mono text-sm">Waiting for pipeline initialization...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: RISK METRICS & DECISION PANEL -->
+                <div id="tab-risk" class="view-section animate-slide-up" style="display:none;">
+                    
+                    <div class="grid-layout-2">
+                        <div class="decision-panel card p-card scale-in-anim">
+                            <div class="dp-header">
+                                <h3>Engine Recommendation</h3>
+                                <div class="conf-badge"><i class="fa-solid fa-fingerprint"></i> High Confidence Score</div>
+                            </div>
+                            <div class="dp-body pt-2 pb-2 text-center">
+                                <div id="decisionBadge" class="big-status status-Manual"><i class="fa-solid fa-hourglass-half"></i> Pending</div>
+                            </div>
+                            <div class="dp-footer">
+                                <div id="markdownReport" class="markdown-prose">Results will appear here upon completion.</div>
+                            </div>
+                        </div>
+
+                        <div class="flex-col gap-2">
+                            <div class="card p-card">
+                                <h3><i class="fa-solid fa-chart-column color-warning"></i> Calculated Risk Factors</h3>
+                                <div class="mt-2 flex-col gap-15">
+                                    <div class="risk-indicator">
+                                        <div class="ri-top">
+                                            <span class="ri-label">Estimated Intent Score</span>
+                                            <span class="ri-val" id="ri-intent-val">0.0</span>
+                                        </div>
+                                        <div class="ri-bar-bg"><div class="ri-bar bg-green" style="width:10%;" id="ri-intent-bar"></div></div>
+                                    </div>
+                                    
+                                    <div class="risk-indicator">
+                                        <div class="ri-top">
+                                            <span class="ri-label" id="metaTokens">Cost / Tokens (LLama-3)</span>
+                                            <span class="ri-val" id="ri-cost-val">$0.00</span>
+                                        </div>
+                                        <div class="ri-bar-bg"><div class="ri-bar bg-blue" style="width:50%;"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card p-card">
+                                <h3><i class="fa-solid fa-vr-cardboard color-purple"></i> Vector Trace (XAI)</h3>
+                                <div class="mt-1">
+                                    <canvas id="ragCanvas" width="500" height="200" style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.05);"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 4: HITL REVIEW QUEUE -->
+                <div id="tab-hitl" class="view-section animate-slide-up" style="display:none;">
+                    <div class="grid-layout-2-split">
+                        <div class="card p-card">
+                            <div class="flex-between pb-border card-header">
+                                <h3><i class="fa-solid fa-users color-accent"></i> HITL Queue</h3>
+                                <button class="btn-outline-small" onclick="fetchPending()"><i class="fa-solid fa-rotate-right"></i></button>
+                            </div>
+                            <div id="pendingList" class="mt-2 flex-col gap-1">
+                                <p class="text-mute">Loading queued workflows...</p>
+                            </div>
+                        </div>
+                        <div class="card p-card bg-darker">
+                            <div class="card-header pb-border">
+                                <h3><i class="fa-solid fa-clock-rotate-left"></i> Review History</h3>
+                            </div>
+                            <div id="historyList" class="mt-2 flex-col gap-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 5: RAG EXPERT -->
+                <div id="tab-rag" class="view-section animate-slide-up" style="display:none;">
+                    <div class="card p-card" style="height: calc(100vh - 120px); display:flex; flex-direction:column;">
+                        <div class="card-header pb-border">
+                            <h3><i class="fa-solid fa-book-journal-whills color-blue"></i> Policy Expert / RAG</h3>
+                            <p class="text-mute">Chat with the vectorized policy database</p>
+                        </div>
+                        <div id="chatHistory" class="chat-container">
+                            <div class="chat-bubble bot"><i class="fa-solid fa-robot"></i> Hello! Ask me about lending policies, rates, and matrices.</div>
+                        </div>
+                        <div class="chat-input-area mt-2">
+                            <input type="text" id="chatInput" placeholder="e.g. What is the max allowed DTI?" class="modern-input" onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                            <button id="chatBtn" class="btn-primary" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="extractionOverlay" class="modal-overlay" style="display:none;">
+        <div class="modal-card scale-in-fast">
+            <h3 class="color-warning mb-1"><i class="fa-solid fa-user-pen"></i> Guardrail Exception</h3>
+            <p class="text-mute mb-2">Review internal extraction data before committing.</p>
+            <textarea id="extractionJson" class="modern-input font-mono mb-2" rows="10" style="background:rgba(0,0,0,0.6);"></textarea>
+            <div class="flex-end gap-1">
+                <button class="btn-primary" onclick="submitExtractionFix()"><i class="fa-solid fa-check"></i> Commit & Resume Tracker</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reviewModal" class="modal-overlay" style="display:none;">
+        <div class="modal-card modal-lg scale-in-fast">
+            <div class="flex-between mb-2">
+                <h3 class="color-warning"><i class="fa-solid fa-triangle-exclamation"></i> Manual Review</h3>
+                <button class="icon-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="modalContent" class="mb-2 overflow-auto" style="max-height: 400px;"></div>
+            <div class="flex-end gap-1">
+                <button class="btn-danger" onclick="submitDecision('Reject')"><i class="fa-solid fa-thumbs-down"></i> Reject</button>
+                <button class="btn-success" onclick="submitDecision('Approve')"><i class="fa-solid fa-thumbs-up"></i> Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>
