@@ -1,4 +1,4 @@
-# 🏦 EY Agentic Underwriting Copilot
+# 🏦 Agentic Underwriting Copilot
 
 A next-generation, multi-agent AI framework for automated credit underwriting, real-time risk analysis, and Human-in-the-Loop (HITL) compliance validation. Built with **LangGraph**, **FastAPI**, and a Premium Modular Vanilla JS frontend.
 
